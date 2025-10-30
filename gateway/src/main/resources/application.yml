@@ -1,0 +1,29 @@
+server:
+  port: 19080
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      routes:
+        # auth endpoints go directly to auth-service, no StripPrefix (keep /api)
+        - id: auth-service-direct
+          uri: http://localhost:18083
+          predicates:
+            - Path=/api/auth/**
+          filters:
+            - StripPrefix=1
+        - id: user-service
+          uri: http://localhost:18081
+          predicates:
+            - Path=/api/user/**
+          filters:
+            - StripPrefix=1
+        - id: tax-service
+          uri: http://localhost:18082
+          predicates:
+            - Path=/api/tax/**
+          filters:
+            - StripPrefix=1
+

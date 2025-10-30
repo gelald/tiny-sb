@@ -1,0 +1,7 @@
+server:
+  port: 18082
+
+spring:
+  application:
+    name: tax-service
+
