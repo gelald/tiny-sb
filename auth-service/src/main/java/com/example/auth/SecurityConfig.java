@@ -2,7 +2,6 @@ package com.example.auth;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -13,11 +12,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/login", "/auth/register", "/actuator/**").permitAll()
-                .anyRequest().authenticated()
-            )
-            .httpBasic(Customizer.withDefaults())
+            .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
+            .httpBasic(httpBasic -> httpBasic.disable())
             .formLogin(form -> form.disable())
             .logout(logout -> logout.disable())
             .sessionManagement(session -> session
